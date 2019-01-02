@@ -1,0 +1,374 @@
+﻿<Window x:Class="Shootapp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Shootapp"
+        mc:Ignorable="d"
+        Title="Shooting Competition Application - SD1991" Height="673.557" Width="693.632" Loaded="Window_Loaded">
+    <DockPanel>
+        <TabControl x:Name="tabCont" KeyUp="tabCont_KeyUp" SelectionChanged="tabCont_SelectionChanged">
+            <TabItem x:Name="tbiCompetition" Header="Precise Competition">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                        <ComboBox x:Name="cbxComp" Width="200" HorizontalAlignment="Left" SelectionChanged="cbxComp_SelectionChanged"/>
+                        <Label Content="Shots:"/>
+                        <Label x:Name="lblShoo"/>
+                        <Label Content="Date:"/>
+                        <Label x:Name="lblDate"/>
+                    </StackPanel>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="190"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <GroupBox Header="SHOOTERS" Grid.Column="0">
+                            <DockPanel>
+                                <StackPanel DockPanel.Dock="Top">
+                                    <DockPanel Margin="0,0,2,1">
+                                        <Label DockPanel.Dock="Left" Content="Filter:"/>
+                                        <TextBox x:Name="txbNameSer" TextChanged="txbNameSer_TextChanged" VerticalContentAlignment="Center"/>
+                                    </DockPanel>
+
+                                    <!-- <DockPanel Margin="0,0,2,1">
+                                        <Label DockPanel.Dock="Left" Content="Surname:"/>
+                                        <TextBox x:Name="txbSurnameSer" TextChanged="txbSurnameSer_TextChanged" VerticalContentAlignment="Center"/>
+                                    </DockPanel>
+                                    <DockPanel Margin="0,1,2,0">
+                                        <Label DockPanel.Dock="Left" Content="Team:"/>
+                                        <TextBox x:Name="txbTeamSer" TextChanged="txbTeamSer_TextChanged" VerticalContentAlignment="Center"/>
+                                    </DockPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button x:Name="btnFilter"  Content="Filter" Margin="0,3,0,3" HorizontalAlignment="Left" Width="75" Click="btnFilter_Click"/>
+                                        <Button x:Name="btnClear" Content="Clear" Margin="3,3,0,3" HorizontalAlignment="Left" Width="75" Click="btnClear_Click"/> 
+                                    </StackPanel> -->
+
+                                </StackPanel>
+                                <StackPanel DockPanel.Dock="top" Orientation="Horizontal">
+                                    <Button x:Name="btnNewComp2" Content="Quick New" Width="75" Margin="0,3,3,3" Click="btnNewComp2_Click"/>
+                                    <Button x:Name="btnEdit2" Content="Edit" Width="75" Margin="0,3,3,3" Click="btnEdit2_Click"/>
+                                </StackPanel>
+                                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
+                                    <Button x:Name="btnAdd2" Content="Add" Width="75" Margin="0,3,3,3" Click="btnAdd2_Click"/>
+                                </StackPanel>
+
+                                <ScrollViewer>
+                                    <DataGrid x:Name="shootersGrid2" SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True" AutoGenerateColumns="False" MouseDoubleClick="shootersGrid2_MouseDoubleClick" Sorting="shootersGrid2_Sorting">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Id" Binding="{Binding id}"/>
+                                            <DataGridTextColumn Header="Name" Binding="{Binding name}"/>
+                                            <DataGridTextColumn Header="Surname" Binding="{Binding surname}"/>
+                                            <DataGridTextColumn Header="Note" Binding="{Binding note}"/>
+                                            <DataGridTextColumn Header="Team" Binding="{Binding tname}"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </ScrollViewer>
+                            </DockPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="SHOTS" Grid.Column="1">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="20,0,0,2">
+                                    <TextBox x:Name="txb0" Width="100" TextChanged="txb0_TextChanged"/>
+                                    <Label Content=" x Miss" DockPanel.Dock="Right"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="20,0,0,2">
+                                    <TextBox x:Name="txb1" Width="100" TextChanged="txb1_TextChanged"/>
+                                    <Label Content=" x 1" DockPanel.Dock="Right"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="20,0,0,2">
+                                    <TextBox x:Name="txb2" Width="100" TextChanged="txb2_TextChanged"/>
+                                    <Label Content=" x 2" DockPanel.Dock="Right"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="20,0,0,2">
+                                    <TextBox x:Name="txb3" Width="100" TextChanged="txb3_TextChanged"/>
+                                    <Label Content=" x 3" DockPanel.Dock="Right"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="20,0,0,2">
+                                    <TextBox x:Name="txb4" Width="100" TextChanged="txb4_TextChanged"/>
+                                    <Label Content=" x 4" DockPanel.Dock="Right"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="20,0,0,2">
+                                    <TextBox x:Name="txb5" Width="100" TextChanged="txb5_TextChanged"/>
+                                    <Label Content=" x 5" DockPanel.Dock="Right"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="20,0,0,2">
+                                    <TextBox x:Name="txb6" Width="100" TextChanged="txb6_TextChanged"/>
+                                    <Label Content=" x 6" DockPanel.Dock="Right"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="20,0,0,2">
+                                    <TextBox x:Name="txb7" Width="100" TextChanged="txb7_TextChanged"/>
+                                    <Label Content=" x 7" DockPanel.Dock="Right"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="20,0,0,2">
+                                    <TextBox x:Name="txb8" Width="100" TextChanged="txb8_TextChanged"/>
+                                    <Label Content=" x 8" DockPanel.Dock="Right"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="20,0,0,2">
+                                    <TextBox x:Name="txb9" Width="100" TextChanged="txb9_TextChanged"/>
+                                    <Label Content=" x 9" DockPanel.Dock="Right"/>
+                                </StackPanel>                                                                                           
+                                <StackPanel Orientation="Horizontal" Margin="20,0,0,2">
+                                    <TextBox x:Name="txb10" Width="100" TextChanged="txb10_TextChanged"/>
+                                    <Label Content=" x 10" DockPanel.Dock="Right"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="20,0,0,2">
+                                    <TextBox x:Name="txb11" Width="100" TextChanged="txb11_TextChanged"/>
+                                    <Label Content=" x Center" DockPanel.Dock="Right"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="2,2,0,0">
+                                    <Button x:Name="btnSetShots" Content="Set Shots" Width="75" Margin="18,0,0,0" Click="btnSetShots_Click"/>
+                                    <Button x:Name="btnClearShots" Content="Clear" Width="75" Margin="3,0,0,0" Click="btnClearShots_Click" />
+                                </StackPanel>
+                                
+
+                                <GroupBox Header="INFORMATION" Margin="0,10,0,0">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="Registerd shots:"></Label>
+                                            <Label x:Name="lblRegShots"></Label>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="Final score:"></Label>
+                                            <Label x:Name="lblFinalScore"></Label>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </GroupBox>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="SCORESHEET" Grid.Column="2">
+                            <TabControl x:Name="tbiTeaShoo" SelectionChanged="tbiTeaShoo_SelectionChanged">
+                                <TabItem Header="Teams">
+                                    <DockPanel>
+                                        <Grid DockPanel.Dock="Bottom">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="75"/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="75"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Button Grid.Column="0" x:Name="btnDelete2" Content="Delete" Margin="3,3,3,3"  Click="btnDelete2_Click"/>
+                                            <Button Grid.Column="2" x:Name="btnPrint2" Content="Print" Margin="3,3,3,3" Click="btnPrint2_Click"/>
+                                        </Grid>
+
+                                        <ScrollViewer>
+                                            <DataGrid x:Name="competitionGrid" SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True" AutoGenerateColumns="False" SelectionChanged="competitionGrid_SelectionChanged">
+                                                <DataGrid.Columns>
+                                                    <DataGridTextColumn Header="Id" Binding="{Binding shoid}"/>
+                                                    <DataGridTextColumn Header="Name" Binding="{Binding shoname}"/>
+                                                    <DataGridTextColumn Header="Surname" Binding="{Binding shosname}"/>                                                    
+                                                    <DataGridTextColumn Header="Shots" Binding="{Binding shots}"/>
+                                                    <DataGridTextColumn Header="Penal" Binding="{Binding penal}"/>
+                                                    <DataGridTextColumn Header="Score" Binding="{Binding score}"/>
+                                                    <DataGridTextColumn Header="Hits" Binding="{Binding hits}"/>
+                                                </DataGrid.Columns>
+                                                <DataGrid.GroupStyle>
+                                                    <GroupStyle>
+                                                        <GroupStyle.ContainerStyle>
+                                                            <Style TargetType="{x:Type GroupItem}">
+                                                                <Setter Property="Margin" Value="0,0,0,5"/>
+                                                                <Setter Property="Template">
+                                                                    <Setter.Value>
+                                                                        <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                                            <Expander IsExpanded="True" BorderBrush="Gainsboro" BorderThickness="1,1,1,5" Background="{x:Null}" Foreground="#FF7C7C7C">
+                                                                                <Expander.Header>
+                                                                                    <DockPanel>
+                                                                                        <TextBlock FontWeight="Bold" Margin="5,0,0,0"/>
+                                                                                        <TextBlock FontWeight="Bold" Text="{Binding Path=Name}" Margin="5,0,0,0" Width="150"/>
+                                                                                        <TextBlock FontWeight="Bold" Text="Members ( "/>
+                                                                                        <TextBlock FontWeight="Bold" Text="{Binding Path=ItemCount}"/>
+                                                                                        <TextBlock FontWeight="Bold" Text=" )"/>
+                                                                                    </DockPanel>
+                                                                                </Expander.Header>
+                                                                                <Expander.Content>
+                                                                                    <ItemsPresenter />
+                                                                                </Expander.Content>
+                                                                            </Expander>
+                                                                        </ControlTemplate>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Style>
+                                                        </GroupStyle.ContainerStyle>
+                                                    </GroupStyle>
+                                                </DataGrid.GroupStyle>
+                                            </DataGrid>
+                                        </ScrollViewer>
+                                    </DockPanel>
+                                </TabItem>
+                                <TabItem Header="Shooters">
+                                    <DockPanel>
+                                        <Grid DockPanel.Dock="Bottom">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="75"/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="75"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Button Grid.Column="0" x:Name="btnDeleteSin2" Content="Delete" Margin="3,3,3,3" Click="btnDeleteSin2_Click"/>
+                                            <Button Grid.Column="2" x:Name="btnPrintSin2" Content="Print" Margin="3,3,3,3"  Click="btnPrint2_Click"/>
+                                        </Grid>
+                                        <ScrollViewer>
+                                            <DataGrid x:Name="shootersSingleGrid" SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True" SelectionChanged="shootersSingleGrid_SelectionChanged" AutoGenerateColumns="False">
+                                                <DataGrid.Columns>
+                                                    <DataGridTextColumn Header="Id" Binding="{Binding shoid}"/>
+                                                    <DataGridTextColumn Header="Name" Binding="{Binding shoname}"/>
+                                                    <DataGridTextColumn Header="Surname" Binding="{Binding shosname}"/>
+                                                    <DataGridTextColumn Header="Shots" Binding="{Binding shots}"/>
+                                                    <DataGridTextColumn Header="Penal" Binding="{Binding penal}"/>
+                                                    <DataGridTextColumn Header="Score" Binding="{Binding score}"/>
+                                                    <DataGridTextColumn Header="Hits" Binding="{Binding hits}"/>
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </ScrollViewer>
+                                    </DockPanel>
+                                </TabItem>
+                            </TabControl>
+                        </GroupBox>
+                    </Grid>
+                </DockPanel>
+            </TabItem>
+
+            <TabItem Header="Competition DBM" x:Name="tbiCompetitionDBM">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Left">
+
+                        <StackPanel Width="330">
+                            <DockPanel Margin="3,3,3,3" Visibility="Collapsed">
+                                <Label DockPanel.Dock="Left" Content="Id:"/>
+                                <TextBox x:Name = "txbCompId" VerticalContentAlignment="Center" IsReadOnly="True"/>
+                            </DockPanel>
+                            <DockPanel Margin="3,3,3,3">
+                                <Label DockPanel.Dock="Left" Content="Name:"/>
+                                <TextBox x:Name = "txbCompName" VerticalContentAlignment="Center"/>
+                            </DockPanel>
+                            <DockPanel Margin="3,3,3,3">
+                                <Label DockPanel.Dock="Left" Content="Date:"/>
+                                <DatePicker x:Name = "dapCompDate"/>
+                            </DockPanel>
+                            <DockPanel Margin="3,3,3,3">
+                                <Label DockPanel.Dock="Left" Content="Shots:"/>
+                                <TextBox x:Name = "txbCompShots" VerticalContentAlignment="Center" Text="10"/>
+                            </DockPanel>
+                        </StackPanel>
+
+                        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,7,0,0">
+                            <Button x:Name="btnCompClear" Margin="2,2,2,2" Content="New" Width="75" Click="btnCompClear_Click"/>
+                            <Button x:Name="btnCompAdd" Margin="2,2,2,2" Content="Add" Width="75" Click="btnCompAdd_Click"/>
+                            <Button x:Name="btnCompUpd" Margin="2,2,2,2" Content="Update" Width="75" Click="btnCompUpd_Click"/>
+                            <Button x:Name="btnCompDel" Margin="2,2,2,2" Content="Delete" Width="75" Click="btnCompDel_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <ScrollViewer>
+                        <DataGrid x:Name="competitionsGrid" SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True" SelectionChanged="competitionsGrid_SelectionChanged" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Id" Binding="{Binding id}"/>
+                                <DataGridTextColumn Header="Name" Binding="{Binding name}"/>
+                                <DataGridTextColumn Header="Date" Binding="{Binding date, StringFormat={}{0:yyyy-MM-dd}}"/>
+                                <DataGridTextColumn Header="Shots" Binding="{Binding shots}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </ScrollViewer>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Shooter DBM" x:Name="tbiShooterDBM">
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Left">
+                        <Grid DockPanel.Dock="Bottom">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="75"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="75"/>
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="btnShooDelAll" Grid.Column="0" Content="Delete All" Margin="2,2,2,2" Click="btnShooDelAll_Click"/>
+                            <Button x:Name="btnImportAll" Grid.Column="2" Content="Import" Margin="2,2,2,2" Click="btnImportAll_Click"/>
+                        </Grid>
+                        <StackPanel>
+                            <StackPanel Width="330">
+                                <DockPanel Margin="3,3,3,3" Visibility="Collapsed">
+                                    <Label DockPanel.Dock="Left" Content="Id:"/>
+                                    <TextBox x:Name="txbShooId" VerticalContentAlignment="Center" IsReadOnly="True"/>
+                                </DockPanel>
+                                <DockPanel Margin="3,3,3,3">
+                                    <Label DockPanel.Dock="Left" Content="Name:"/>
+                                    <TextBox x:Name="txbShooName" VerticalContentAlignment="Center"/>
+                                </DockPanel>
+                                <DockPanel Margin="3,3,3,3">
+                                    <Label DockPanel.Dock="Left" Content="Surname:"/>
+                                    <TextBox x:Name="txbShooSname" VerticalContentAlignment="Center"/>
+                                </DockPanel>
+                                <DockPanel Margin="3,3,3,3">
+                                    <Label DockPanel.Dock="Left" Content="Team:"/>
+                                    <ComboBox x:Name="cbxShooTeam"/>
+                                </DockPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="btnNewTeam" Content="New Team" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,2,2,2" Click="btnNewTeam_Click"/>
+                                </StackPanel>
+                                <StackPanel Margin="3,3,3,3">
+                                    <GroupBox Header="Note:" >
+                                        <TextBox x:Name="txbShooNote" TextWrapping="Wrap" Height="100"/>
+                                    </GroupBox>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,7,0,0">
+                                <Button x:Name="btnShooClear" Margin="2,2,2,2" Content="New" Width="75" Click="btnShooClear_Click"/>
+                                <Button x:Name="btnShooAdd" Margin="2,2,2,2" Content="Add" Width="75" Click="btnShooAdd_Click"/>
+                                <Button x:Name="btnShooUpd" Margin="2,2,2,2" Content="Update" Width="75" Click="btnShooUpd_Click"/>
+                                <Button x:Name="btnShooDel" Margin="2,2,2,2" Content="Delete" Width="75" Click="btnShooDel_Click"/>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </DockPanel>
+
+                    <ScrollViewer>
+                        <DataGrid x:Name="shootersGrid" SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True" SelectionChanged="shootersGrid_SelectionChanged" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Id" Binding="{Binding id}"/>
+                                <DataGridTextColumn Header="Name" Binding="{Binding name}"/>
+                                <DataGridTextColumn Header="Surname" Binding="{Binding surname}"/>
+                                <DataGridTextColumn Header="Note" Binding="{Binding note}"/>
+                                <DataGridTextColumn Header="Team" Binding="{Binding tname}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </ScrollViewer>
+                </DockPanel>
+            </TabItem>
+            <TabItem x:Name="tbiTeamDBM" Header="Team DBM" Height="22" VerticalAlignment="Top">
+                <DockPanel>
+                    <DockPanel>
+                        <Button x:Name="btnTeamDelAll" DockPanel.Dock="Bottom" Content="Delete All" Width="75" Margin="2,2,2,2" HorizontalAlignment="Left" VerticalAlignment="Center" Click="btnTeamDelAll_Click"/>
+                        <StackPanel DockPanel.Dock="Left">
+                            <StackPanel Width="330">
+                                <DockPanel Margin="3,3,3,3" Visibility="Collapsed">
+                                    <Label DockPanel.Dock="Left" Content="Id:"/>
+                                    <TextBox x:Name="txbTeamId" VerticalContentAlignment="Center" IsReadOnly="True"/>
+                                </DockPanel>
+                                <DockPanel Margin="3,3,3,3">
+                                    <Label DockPanel.Dock="Left" Content="Name:"/>
+                                    <TextBox x:Name="txbTeamName" VerticalContentAlignment="Center"/>
+                                </DockPanel>
+                            </StackPanel>
+                            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,7,0,0">
+                                <Button x:Name="btnTeamClear" Margin="2,2,2,2" Content="New" Width="75" Click="btnTeamClear_Click"/>
+                                <Button x:Name="btnTeamAdd" Margin="2,2,2,2" Content="Add" Width="75" Click="btnTeamAdd_Click"/>
+                                <Button x:Name="btnTeamUpd" Margin="2,2,2,2" Content="Update" Width="75" Click="btnTeamUpd_Click"/>
+                                <Button x:Name="btnTeamDel" Margin="2,2,2,2" Content="Delete" Width="75" Click="btnTeamDel_Click"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </DockPanel>
+                    <ScrollViewer>
+                        <DataGrid x:Name="teamsGrid" SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True" SelectionChanged="teamsGrid_SelectionChanged" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Id" Binding="{Binding id}"/>
+                                <DataGridTextColumn Header="Name" Binding="{Binding name}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </ScrollViewer>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>

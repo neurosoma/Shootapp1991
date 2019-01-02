@@ -1,0 +1,547 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ShootappDBModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=&quot;C:\Users\Angron\Documents\Visual Studio 2015\Projects\Shootapp\Shootapp\bin\Release\Database\ShootappDB.db&quot;;page size=1024" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="competitions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="shots" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="results">
+          <Key>
+            <PropertyRef Name="cid" />
+            <PropertyRef Name="sid" />
+          </Key>
+          <Property Name="cid" Type="integer" Nullable="false" />
+          <Property Name="sid" Type="integer" Nullable="false" />
+          <Property Name="shots" Type="integer" />
+          <Property Name="penal" Type="integer" />
+          <Property Name="score" Type="integer" />
+          <Property Name="hits" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <EntityType Name="shooters">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="surname" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="tid" Type="integer" />
+          <Property Name="note" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <EntityType Name="teams">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.competitionview' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="competitionview">
+          <Key>
+            <PropertyRef Name="comid" />
+            <PropertyRef Name="shoid" />
+            <PropertyRef Name="shoname" />
+            <PropertyRef Name="teaname" />
+          </Key>
+          <Property Name="comid" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="shoid" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="shoname" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="shosname" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="teaid" Type="integer" />
+          <Property Name="teaname" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="shots" Type="integer" />
+          <Property Name="score" Type="integer" />
+          <Property Name="hits" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="penal" Type="integer" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.shooterscoview' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="shooterscoview">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="tname" />
+          </Key>
+          <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="surname" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="tid" Type="integer" />
+          <Property Name="note" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="tname" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.singleprintview' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="singleprintview">
+          <Key>
+            <PropertyRef Name="cid" />
+            <PropertyRef Name="sid" />
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="cid" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sid" Type="integer" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="surname" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="shots" Type="integer" />
+          <Property Name="score" Type="integer" />
+          <Property Name="hits" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="penal" Type="integer" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.teamdistview' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="teamdistview">
+          <Key>
+            <PropertyRef Name="cid" />
+            <PropertyRef Name="tname" />
+          </Key>
+          <Property Name="cid" Type="integer" Nullable="false" />
+          <Property Name="tid" Type="integer" />
+          <Property Name="tname" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.teamprintview' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="teamprintview">
+          <Key>
+            <PropertyRef Name="cid" />
+            <PropertyRef Name="cstotal" />
+            <PropertyRef Name="sid" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="tname" />
+          </Key>
+          <Property Name="cid" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cstotal" Type="integer" Nullable="false" />
+          <Property Name="sid" Type="integer" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="surname" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="tid" Type="integer" />
+          <Property Name="tname" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="shots" Type="integer" />
+          <Property Name="score" Type="integer" />
+          <Property Name="hits" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="penal" Type="integer" />
+        </EntityType>
+        <Association Name="FK_results_0_0">
+          <End Role="shooters" Type="Self.shooters" Multiplicity="1" />
+          <End Role="results" Type="Self.results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="shooters">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="results">
+              <PropertyRef Name="sid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_results_1_0">
+          <End Role="competitions" Type="Self.competitions" Multiplicity="1" />
+          <End Role="results" Type="Self.results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="competitions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="results">
+              <PropertyRef Name="cid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ShootappDBModelStoreContainer">
+          <EntitySet Name="competitions" EntityType="Self.competitions" store:Type="Tables" />
+          <EntitySet Name="results" EntityType="Self.results" store:Type="Tables" />
+          <EntitySet Name="shooters" EntityType="Self.shooters" store:Type="Tables" />
+          <EntitySet Name="teams" EntityType="Self.teams" store:Type="Tables" />
+          <EntitySet Name="competitionview" EntityType="Self.competitionview" store:Type="Views">
+            <DefiningQuery>SELECT 
+[competitionview].[comid] AS [comid], 
+[competitionview].[shoid] AS [shoid], 
+[competitionview].[shoname] AS [shoname], 
+[competitionview].[shosname] AS [shosname], 
+[competitionview].[teaid] AS [teaid], 
+[competitionview].[teaname] AS [teaname], 
+[competitionview].[shots] AS [shots], 
+[competitionview].[score] AS [score], 
+[competitionview].[hits] AS [hits], 
+[competitionview].[penal] AS [penal]
+FROM [competitionview] AS [competitionview]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="shooterscoview" EntityType="Self.shooterscoview" store:Type="Views">
+            <DefiningQuery>SELECT 
+[shooterscoview].[id] AS [id], 
+[shooterscoview].[name] AS [name], 
+[shooterscoview].[surname] AS [surname], 
+[shooterscoview].[tid] AS [tid], 
+[shooterscoview].[note] AS [note], 
+[shooterscoview].[tname] AS [tname]
+FROM [shooterscoview] AS [shooterscoview]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="singleprintview" EntityType="Self.singleprintview" store:Type="Views">
+            <DefiningQuery>SELECT 
+[singleprintview].[cid] AS [cid], 
+[singleprintview].[sid] AS [sid], 
+[singleprintview].[name] AS [name], 
+[singleprintview].[surname] AS [surname], 
+[singleprintview].[shots] AS [shots], 
+[singleprintview].[score] AS [score], 
+[singleprintview].[hits] AS [hits], 
+[singleprintview].[penal] AS [penal]
+FROM [singleprintview] AS [singleprintview]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="teamdistview" EntityType="Self.teamdistview" store:Type="Views">
+            <DefiningQuery>SELECT 
+[teamdistview].[cid] AS [cid], 
+[teamdistview].[tid] AS [tid], 
+[teamdistview].[tname] AS [tname]
+FROM [teamdistview] AS [teamdistview]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="teamprintview" EntityType="Self.teamprintview" store:Type="Views">
+            <DefiningQuery>SELECT 
+[teamprintview].[cid] AS [cid], 
+[teamprintview].[cstotal] AS [cstotal], 
+[teamprintview].[sid] AS [sid], 
+[teamprintview].[name] AS [name], 
+[teamprintview].[surname] AS [surname], 
+[teamprintview].[tid] AS [tid], 
+[teamprintview].[tname] AS [tname], 
+[teamprintview].[shots] AS [shots], 
+[teamprintview].[score] AS [score], 
+[teamprintview].[hits] AS [hits], 
+[teamprintview].[penal] AS [penal]
+FROM [teamprintview] AS [teamprintview]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_results_0_0" Association="Self.FK_results_0_0">
+            <End Role="shooters" EntitySet="shooters" />
+            <End Role="results" EntitySet="results" />
+          </AssociationSet>
+          <AssociationSet Name="FK_results_1_0" Association="Self.FK_results_1_0">
+            <End Role="competitions" EntitySet="competitions" />
+            <End Role="results" EntitySet="results" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ShootappDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="competition">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" />
+          <Property Name="shots" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="results" Relationship="Self.FK_results_1_0" FromRole="competitions" ToRole="results" />
+        </EntityType>
+        <EntityType Name="result">
+          <Key>
+            <PropertyRef Name="cid" />
+            <PropertyRef Name="sid" />
+          </Key>
+          <Property Name="cid" Type="Int64" Nullable="false" />
+          <Property Name="sid" Type="Int64" Nullable="false" />
+          <Property Name="shots" Type="Int64" />
+          <Property Name="score" Type="Int64" />
+          <Property Name="hits" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="competition" Relationship="Self.FK_results_1_0" FromRole="results" ToRole="competitions" />
+          <NavigationProperty Name="shooter" Relationship="Self.FK_results_0_0" FromRole="results" ToRole="shooters" />
+          <Property Name="penal" Type="Int64" />
+        </EntityType>
+        <EntityType Name="shooter">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="surname" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="tid" Type="Int64" />
+          <Property Name="note" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="results" Relationship="Self.FK_results_0_0" FromRole="shooters" ToRole="results" />
+          <NavigationProperty Name="team" Relationship="Self.FK_shooters_0_0" FromRole="shooters" ToRole="teams" />
+        </EntityType>
+        <EntityType Name="team">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="shooters" Relationship="Self.FK_shooters_0_0" FromRole="teams" ToRole="shooters" />
+        </EntityType>
+        <EntityType Name="competitionview">
+          <Key>
+            <PropertyRef Name="comid" />
+            <PropertyRef Name="shoid" />
+            <PropertyRef Name="shoname" />
+            <PropertyRef Name="teaname" />
+          </Key>
+          <Property Name="comid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="shoid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="shoname" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="shosname" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="teaid" Type="Int64" />
+          <Property Name="teaname" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="shots" Type="Int64" />
+          <Property Name="score" Type="Int64" />
+          <Property Name="hits" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="penal" Type="Int64" />
+        </EntityType>
+        <EntityType Name="shooterscoview">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="tname" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="surname" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="tid" Type="Int64" />
+          <Property Name="note" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="tname" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="singleprintview">
+          <Key>
+            <PropertyRef Name="cid" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="sid" />
+          </Key>
+          <Property Name="cid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="surname" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="shots" Type="Int64" />
+          <Property Name="score" Type="Int64" />
+          <Property Name="hits" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="sid" Type="Int64" Nullable="false" />
+          <Property Name="penal" Type="Int64" />
+        </EntityType>
+        <EntityType Name="teamdistview">
+          <Key>
+            <PropertyRef Name="cid" />
+            <PropertyRef Name="tname" />
+          </Key>
+          <Property Name="cid" Type="Int64" Nullable="false" />
+          <Property Name="tid" Type="Int64" />
+          <Property Name="tname" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="teamprintview">
+          <Key>
+            <PropertyRef Name="cid" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="tname" />
+            <PropertyRef Name="sid" />
+            <PropertyRef Name="cstotal" />
+          </Key>
+          <Property Name="cid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="surname" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="tid" Type="Int64" />
+          <Property Name="tname" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="shots" Type="Int64" />
+          <Property Name="score" Type="Int64" />
+          <Property Name="hits" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="sid" Type="Int64" Nullable="false" />
+          <Property Name="cstotal" Type="Int64" Nullable="false" />
+          <Property Name="penal" Type="Int64" />
+        </EntityType>
+        <Association Name="FK_results_1_0">
+          <End Role="competitions" Type="Self.competition" Multiplicity="1" />
+          <End Role="results" Type="Self.result" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="competitions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="results">
+              <PropertyRef Name="cid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_results_0_0">
+          <End Role="shooters" Type="Self.shooter" Multiplicity="1" />
+          <End Role="results" Type="Self.result" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="shooters">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="results">
+              <PropertyRef Name="sid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_shooters_0_0">
+          <End Role="teams" Type="Self.team" Multiplicity="0..1" />
+          <End Role="shooters" Type="Self.shooter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="teams">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="shooters">
+              <PropertyRef Name="tid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ShootappDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="competitions" EntityType="Self.competition" />
+          <EntitySet Name="results" EntityType="Self.result" />
+          <EntitySet Name="shooters" EntityType="Self.shooter" />
+          <EntitySet Name="teams" EntityType="Self.team" />
+          <EntitySet Name="competitionviews" EntityType="Self.competitionview" />
+          <EntitySet Name="shooterscoviews" EntityType="Self.shooterscoview" />
+          <EntitySet Name="singleprintviews" EntityType="Self.singleprintview" />
+          <EntitySet Name="teamdistviews" EntityType="Self.teamdistview" />
+          <EntitySet Name="teamprintviews" EntityType="Self.teamprintview" />
+          <AssociationSet Name="FK_results_1_0" Association="Self.FK_results_1_0">
+            <End Role="competitions" EntitySet="competitions" />
+            <End Role="results" EntitySet="results" />
+          </AssociationSet>
+          <AssociationSet Name="FK_results_0_0" Association="Self.FK_results_0_0">
+            <End Role="shooters" EntitySet="shooters" />
+            <End Role="results" EntitySet="results" />
+          </AssociationSet>
+          <AssociationSet Name="FK_shooters_0_0" Association="Self.FK_shooters_0_0">
+            <End Role="teams" EntitySet="teams" />
+            <End Role="shooters" EntitySet="shooters" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ShootappDBModelStoreContainer" CdmEntityContainer="ShootappDBEntities">
+          <EntitySetMapping Name="competitions">
+            <EntityTypeMapping TypeName="ShootappDBModel.competition">
+              <MappingFragment StoreEntitySet="competitions">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="shots" ColumnName="shots" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="results">
+            <EntityTypeMapping TypeName="ShootappDBModel.result">
+              <MappingFragment StoreEntitySet="results">
+                <ScalarProperty Name="penal" ColumnName="penal" />
+                <ScalarProperty Name="cid" ColumnName="cid" />
+                <ScalarProperty Name="sid" ColumnName="sid" />
+                <ScalarProperty Name="shots" ColumnName="shots" />
+                <ScalarProperty Name="score" ColumnName="score" />
+                <ScalarProperty Name="hits" ColumnName="hits" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="shooters">
+            <EntityTypeMapping TypeName="ShootappDBModel.shooter">
+              <MappingFragment StoreEntitySet="shooters">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="tid" ColumnName="tid" />
+                <ScalarProperty Name="note" ColumnName="note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="teams">
+            <EntityTypeMapping TypeName="ShootappDBModel.team">
+              <MappingFragment StoreEntitySet="teams">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="competitionviews">
+            <EntityTypeMapping TypeName="ShootappDBModel.competitionview">
+              <MappingFragment StoreEntitySet="competitionview">
+                <ScalarProperty Name="penal" ColumnName="penal" />
+                <ScalarProperty Name="comid" ColumnName="comid" />
+                <ScalarProperty Name="shoid" ColumnName="shoid" />
+                <ScalarProperty Name="shoname" ColumnName="shoname" />
+                <ScalarProperty Name="shosname" ColumnName="shosname" />
+                <ScalarProperty Name="teaid" ColumnName="teaid" />
+                <ScalarProperty Name="teaname" ColumnName="teaname" />
+                <ScalarProperty Name="shots" ColumnName="shots" />
+                <ScalarProperty Name="score" ColumnName="score" />
+                <ScalarProperty Name="hits" ColumnName="hits" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="shooterscoviews">
+            <EntityTypeMapping TypeName="ShootappDBModel.shooterscoview">
+              <MappingFragment StoreEntitySet="shooterscoview">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="tid" ColumnName="tid" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="tname" ColumnName="tname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="singleprintviews">
+            <EntityTypeMapping TypeName="ShootappDBModel.singleprintview">
+              <MappingFragment StoreEntitySet="singleprintview">
+                <ScalarProperty Name="penal" ColumnName="penal" />
+                <ScalarProperty Name="sid" ColumnName="sid" />
+                <ScalarProperty Name="cid" ColumnName="cid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="shots" ColumnName="shots" />
+                <ScalarProperty Name="score" ColumnName="score" />
+                <ScalarProperty Name="hits" ColumnName="hits" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="teamdistviews">
+            <EntityTypeMapping TypeName="ShootappDBModel.teamdistview">
+              <MappingFragment StoreEntitySet="teamdistview">
+                <ScalarProperty Name="cid" ColumnName="cid" />
+                <ScalarProperty Name="tid" ColumnName="tid" />
+                <ScalarProperty Name="tname" ColumnName="tname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="teamprintviews">
+            <EntityTypeMapping TypeName="ShootappDBModel.teamprintview">
+              <MappingFragment StoreEntitySet="teamprintview">
+                <ScalarProperty Name="penal" ColumnName="penal" />
+                <ScalarProperty Name="cstotal" ColumnName="cstotal" />
+                <ScalarProperty Name="sid" ColumnName="sid" />
+                <ScalarProperty Name="cid" ColumnName="cid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="tid" ColumnName="tid" />
+                <ScalarProperty Name="tname" ColumnName="tname" />
+                <ScalarProperty Name="shots" ColumnName="shots" />
+                <ScalarProperty Name="score" ColumnName="score" />
+                <ScalarProperty Name="hits" ColumnName="hits" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

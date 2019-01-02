@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6a7d28ec88e8418a8e4d2307880a4ac8" Name="Diagram1">
+        <EntityTypeShape EntityType="ShootappDBModel.competition" Width="1.5" PointX="2.625" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShootappDBModel.result" Width="1.5" PointX="5.125" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShootappDBModel.shooter" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShootappDBModel.team" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShootappDBModel.competitionview" Width="1.5" PointX="5" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShootappDBModel.shooterscoview" Width="1.5" PointX="6.875" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShootappDBModel.singleprintview" Width="1.5" PointX="7.125" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShootappDBModel.teamdistview" Width="1.5" PointX="8.875" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShootappDBModel.teamprintview" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <AssociationConnector Association="ShootappDBModel.FK_results_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="ShootappDBModel.FK_results_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="ShootappDBModel.FK_shooters_0_0" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
