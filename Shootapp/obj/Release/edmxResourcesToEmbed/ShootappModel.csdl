@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ShootappDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="competition">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="date" Type="DateTime" Nullable="false" />
+    <Property Name="shots" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="results" Relationship="Self.FK_results_1_0" FromRole="competitions" ToRole="results" />
+  </EntityType>
+  <EntityType Name="result">
+    <Key>
+      <PropertyRef Name="cid" />
+      <PropertyRef Name="sid" />
+    </Key>
+    <Property Name="cid" Type="Int64" Nullable="false" />
+    <Property Name="sid" Type="Int64" Nullable="false" />
+    <Property Name="shots" Type="Int64" />
+    <Property Name="score" Type="Int64" />
+    <Property Name="hits" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="competition" Relationship="Self.FK_results_1_0" FromRole="results" ToRole="competitions" />
+    <NavigationProperty Name="shooter" Relationship="Self.FK_results_0_0" FromRole="results" ToRole="shooters" />
+    <Property Name="penal" Type="Int64" />
+  </EntityType>
+  <EntityType Name="shooter">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="surname" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="tid" Type="Int64" />
+    <Property Name="note" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="results" Relationship="Self.FK_results_0_0" FromRole="shooters" ToRole="results" />
+    <NavigationProperty Name="team" Relationship="Self.FK_shooters_0_0" FromRole="shooters" ToRole="teams" />
+  </EntityType>
+  <EntityType Name="team">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="shooters" Relationship="Self.FK_shooters_0_0" FromRole="teams" ToRole="shooters" />
+  </EntityType>
+  <EntityType Name="competitionview">
+    <Key>
+      <PropertyRef Name="comid" />
+      <PropertyRef Name="shoid" />
+      <PropertyRef Name="shoname" />
+      <PropertyRef Name="teaname" />
+    </Key>
+    <Property Name="comid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="shoid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="shoname" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="shosname" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="teaid" Type="Int64" />
+    <Property Name="teaname" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="shots" Type="Int64" />
+    <Property Name="score" Type="Int64" />
+    <Property Name="hits" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="penal" Type="Int64" />
+  </EntityType>
+  <EntityType Name="shooterscoview">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="tname" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="surname" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="tid" Type="Int64" />
+    <Property Name="note" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="tname" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="singleprintview">
+    <Key>
+      <PropertyRef Name="cid" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="sid" />
+    </Key>
+    <Property Name="cid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="surname" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="shots" Type="Int64" />
+    <Property Name="score" Type="Int64" />
+    <Property Name="hits" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="sid" Type="Int64" Nullable="false" />
+    <Property Name="penal" Type="Int64" />
+  </EntityType>
+  <EntityType Name="teamdistview">
+    <Key>
+      <PropertyRef Name="cid" />
+      <PropertyRef Name="tname" />
+    </Key>
+    <Property Name="cid" Type="Int64" Nullable="false" />
+    <Property Name="tid" Type="Int64" />
+    <Property Name="tname" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="teamprintview">
+    <Key>
+      <PropertyRef Name="cid" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="tname" />
+      <PropertyRef Name="sid" />
+      <PropertyRef Name="cstotal" />
+    </Key>
+    <Property Name="cid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="surname" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="tid" Type="Int64" />
+    <Property Name="tname" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="shots" Type="Int64" />
+    <Property Name="score" Type="Int64" />
+    <Property Name="hits" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+    <Property Name="sid" Type="Int64" Nullable="false" />
+    <Property Name="cstotal" Type="Int64" Nullable="false" />
+    <Property Name="penal" Type="Int64" />
+  </EntityType>
+  <Association Name="FK_results_1_0">
+    <End Role="competitions" Type="Self.competition" Multiplicity="1" />
+    <End Role="results" Type="Self.result" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="competitions">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="results">
+        <PropertyRef Name="cid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_results_0_0">
+    <End Role="shooters" Type="Self.shooter" Multiplicity="1" />
+    <End Role="results" Type="Self.result" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="shooters">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="results">
+        <PropertyRef Name="sid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_shooters_0_0">
+    <End Role="teams" Type="Self.team" Multiplicity="0..1" />
+    <End Role="shooters" Type="Self.shooter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="teams">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="shooters">
+        <PropertyRef Name="tid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ShootappDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="competitions" EntityType="Self.competition" />
+    <EntitySet Name="results" EntityType="Self.result" />
+    <EntitySet Name="shooters" EntityType="Self.shooter" />
+    <EntitySet Name="teams" EntityType="Self.team" />
+    <EntitySet Name="competitionviews" EntityType="Self.competitionview" />
+    <EntitySet Name="shooterscoviews" EntityType="Self.shooterscoview" />
+    <EntitySet Name="singleprintviews" EntityType="Self.singleprintview" />
+    <EntitySet Name="teamdistviews" EntityType="Self.teamdistview" />
+    <EntitySet Name="teamprintviews" EntityType="Self.teamprintview" />
+    <AssociationSet Name="FK_results_1_0" Association="Self.FK_results_1_0">
+      <End Role="competitions" EntitySet="competitions" />
+      <End Role="results" EntitySet="results" />
+    </AssociationSet>
+    <AssociationSet Name="FK_results_0_0" Association="Self.FK_results_0_0">
+      <End Role="shooters" EntitySet="shooters" />
+      <End Role="results" EntitySet="results" />
+    </AssociationSet>
+    <AssociationSet Name="FK_shooters_0_0" Association="Self.FK_shooters_0_0">
+      <End Role="teams" EntitySet="teams" />
+      <End Role="shooters" EntitySet="shooters" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

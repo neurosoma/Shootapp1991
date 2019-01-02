@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ShootappDBModelStoreContainer" CdmEntityContainer="ShootappDBEntities">
+    <EntitySetMapping Name="competitions">
+      <EntityTypeMapping TypeName="ShootappDBModel.competition">
+        <MappingFragment StoreEntitySet="competitions">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="shots" ColumnName="shots" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="results">
+      <EntityTypeMapping TypeName="ShootappDBModel.result">
+        <MappingFragment StoreEntitySet="results">
+          <ScalarProperty Name="penal" ColumnName="penal" />
+          <ScalarProperty Name="cid" ColumnName="cid" />
+          <ScalarProperty Name="sid" ColumnName="sid" />
+          <ScalarProperty Name="shots" ColumnName="shots" />
+          <ScalarProperty Name="score" ColumnName="score" />
+          <ScalarProperty Name="hits" ColumnName="hits" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shooters">
+      <EntityTypeMapping TypeName="ShootappDBModel.shooter">
+        <MappingFragment StoreEntitySet="shooters">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="surname" ColumnName="surname" />
+          <ScalarProperty Name="tid" ColumnName="tid" />
+          <ScalarProperty Name="note" ColumnName="note" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="teams">
+      <EntityTypeMapping TypeName="ShootappDBModel.team">
+        <MappingFragment StoreEntitySet="teams">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="competitionviews">
+      <EntityTypeMapping TypeName="ShootappDBModel.competitionview">
+        <MappingFragment StoreEntitySet="competitionview">
+          <ScalarProperty Name="penal" ColumnName="penal" />
+          <ScalarProperty Name="comid" ColumnName="comid" />
+          <ScalarProperty Name="shoid" ColumnName="shoid" />
+          <ScalarProperty Name="shoname" ColumnName="shoname" />
+          <ScalarProperty Name="shosname" ColumnName="shosname" />
+          <ScalarProperty Name="teaid" ColumnName="teaid" />
+          <ScalarProperty Name="teaname" ColumnName="teaname" />
+          <ScalarProperty Name="shots" ColumnName="shots" />
+          <ScalarProperty Name="score" ColumnName="score" />
+          <ScalarProperty Name="hits" ColumnName="hits" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="shooterscoviews">
+      <EntityTypeMapping TypeName="ShootappDBModel.shooterscoview">
+        <MappingFragment StoreEntitySet="shooterscoview">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="surname" ColumnName="surname" />
+          <ScalarProperty Name="tid" ColumnName="tid" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="tname" ColumnName="tname" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="singleprintviews">
+      <EntityTypeMapping TypeName="ShootappDBModel.singleprintview">
+        <MappingFragment StoreEntitySet="singleprintview">
+          <ScalarProperty Name="penal" ColumnName="penal" />
+          <ScalarProperty Name="sid" ColumnName="sid" />
+          <ScalarProperty Name="cid" ColumnName="cid" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="surname" ColumnName="surname" />
+          <ScalarProperty Name="shots" ColumnName="shots" />
+          <ScalarProperty Name="score" ColumnName="score" />
+          <ScalarProperty Name="hits" ColumnName="hits" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="teamdistviews">
+      <EntityTypeMapping TypeName="ShootappDBModel.teamdistview">
+        <MappingFragment StoreEntitySet="teamdistview">
+          <ScalarProperty Name="cid" ColumnName="cid" />
+          <ScalarProperty Name="tid" ColumnName="tid" />
+          <ScalarProperty Name="tname" ColumnName="tname" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="teamprintviews">
+      <EntityTypeMapping TypeName="ShootappDBModel.teamprintview">
+        <MappingFragment StoreEntitySet="teamprintview">
+          <ScalarProperty Name="penal" ColumnName="penal" />
+          <ScalarProperty Name="cstotal" ColumnName="cstotal" />
+          <ScalarProperty Name="sid" ColumnName="sid" />
+          <ScalarProperty Name="cid" ColumnName="cid" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="surname" ColumnName="surname" />
+          <ScalarProperty Name="tid" ColumnName="tid" />
+          <ScalarProperty Name="tname" ColumnName="tname" />
+          <ScalarProperty Name="shots" ColumnName="shots" />
+          <ScalarProperty Name="score" ColumnName="score" />
+          <ScalarProperty Name="hits" ColumnName="hits" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
