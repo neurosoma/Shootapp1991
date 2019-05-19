@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Controls;
+using System.Windows;
 
 namespace Shootapp
 {
@@ -78,9 +80,9 @@ namespace Shootapp
             //shooter rank
             int rank = 1;
 
-            string outprint = "---------------------------------------------------------------------------------------------------------\n";
+            string outprint = "   ---------------------------------------------------------------------------------------------------------\n";
 
-            outprint += String.Format("{0,5}. {1,-20}{2,4}{3,4}{4,4}{5,4}{6,4}{7,4}{8,4}{9,4}{10,4}{11,4}{12,4}{13,4}{14,10}{15,10}{16,10}", GlobalRank, Name, Hits[11], Hits[10], Hits[9], Hits[8], Hits[7], Hits[6], Hits[5], Hits[4], Hits[3], Hits[2], Hits[1], Hits[0], Total, /*(CShots - Total) < 0 ? Total - CShots : 0*/ team_penal, TeamScore);
+            outprint += String.Format("   {0,5}. {1,-20}{2,4}{3,4}{4,4}{5,4}{6,4}{7,4}{8,4}{9,4}{10,4}{11,4}{12,4}{13,4}{14,13}{15,13}", GlobalRank, Name.Length > 20 ?  Name.Substring(0, 20) : Name, Hits[11], Hits[10], Hits[9], Hits[8], Hits[7], Hits[6], Hits[5], Hits[4], Hits[3], Hits[2], Hits[1], Hits[0], Total, TeamScore);
 
 
             outprint += "\n\n";
@@ -88,7 +90,7 @@ namespace Shootapp
             foreach (teamprintview tpv in ShootersInTeam)
             {
                 string[] singleHits = tpv.hits.Split(':');
-                outprint += String.Format("{0,25}{1,6}{2,4}{3,4}{4,4}{5,4}{6,4}{7,4}{8,4}{9,4}{10,4}{11,4}{12,4}{13,10}{14,10}{15,10}\n", tpv.name + " " + tpv.surname, singleHits[11], singleHits[10], singleHits[9], singleHits[8], singleHits[7], singleHits[6], singleHits[5], singleHits[4], singleHits[3], singleHits[2], singleHits[1], singleHits[0], tpv.shots, /*(tpv.cstotal - tpv.shots) < 0 ? (int)tpv.shots - (int)tpv.cstotal : 0*/ tpv.penal, tpv.score);
+                outprint += String.Format("   {0,25}{1,6}{2,4}{3,4}{4,4}{5,4}{6,4}{7,4}{8,4}{9,4}{10,4}{11,4}{12,4}{13,13}{14,13}\n", (tpv.name + " " + tpv.surname).Length > 25 ? (tpv.name + " " + tpv.surname).Substring(0, 20) : tpv.name + " " + tpv.surname, singleHits[11], singleHits[10], singleHits[9], singleHits[8], singleHits[7], singleHits[6], singleHits[5], singleHits[4], singleHits[3], singleHits[2], singleHits[1], singleHits[0], tpv.shots, tpv.score);
                 rank++;
             }
             outprint += "\n";
@@ -217,13 +219,17 @@ namespace Shootapp
         {
             TeamPrint tp = obj as TeamPrint;
 
-            if (this.TeamScore > tp.TeamScore) {
+            if (this.TeamScore > tp.TeamScore)
+            {
                 return 1;
             }
-            else if (this.TeamScore < tp.TeamScore) {
+            else if (this.TeamScore < tp.TeamScore)
+            {
                 return -1;
-            } else if(this.TeamScore == tp.TeamScore) {
-                for (int i = 0; i < this.Hits.Count; i++)
+            }
+            else if (this.TeamScore == tp.TeamScore)
+            {
+                for (int i = this.Hits.Count - 1; i > 0; i--)
                 {
                     if (this.Hits[i] == tp.Hits[i])
                     {
@@ -237,7 +243,7 @@ namespace Shootapp
                     {
                         return 1;
                     }
-                }               
+                }
             }
             return 0;
         }        

@@ -4,6 +4,9 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Markup;
+using System.Windows.Media;
 
 namespace Shootapp
 {
@@ -51,6 +54,13 @@ namespace Shootapp
             {
                 //Sets competition details
                 List<competition> getInfoQ = context.competitions.Where(c => c.id == compId).ToList();
+
+                if (getInfoQ.Count == 0)
+                {
+                    this.Close();
+                    return;
+                }
+
                 cname = getInfoQ[0].name;
                 cdate = getInfoQ[0].date;
 
@@ -63,38 +73,22 @@ namespace Shootapp
                 var tidQ = context.teamdistviews.Where(t => t.cid == compId);
                 teamIds = tidQ.ToList();
 
-                
-                // Connect alternative grids
-                var query2 = from cv in context.competitionviews
-                             where cv.comid == compId
-                             select cv;
-
-                if (query2 != null)
-                {
-                    List<competitionview> qcv = query2.ToList();
-
-                    FlipStringHits(qcv);
-
-                    shootersSingleGrid.ItemsSource = qcv;
-
-                    ListCollectionView view = new ListCollectionView(qcv);
-                    view.GroupDescriptions.Add(new PropertyGroupDescription("teaname"));
-
-                    competitionGrid.ItemsSource = view;
-                }                               
             }
             FillTextSingle();
             FillTextTeam();
         }
-        
 
-        // Create teams and text
+
+        //CODE FOR CREATING FIXED DOCUMENT
         private void FillTextTeam()
         {
-            txbTeam.Text = String.Format("{0}, {1}\n\n", cname, cdate.ToShortDateString());
+            int rank = 1;
+            int blocks_on_page = 10;
+            int counter = 10;
 
-            txbTeam.Text += String.Format("{0} {1}{2,20}{3,4}{4,4}{5,4}{6,4}{7,4}{8,4}{9,4}{10,4}{11,4}{12,4}{13,4}{14,10}{15,10}{16,10}\n", "MESTO", "EKIPA", "M", 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, "X", "STRELI", "ODBITEK", "REZULTAT");
-
+            FixedPage page = null;
+            TextBlock pageText = null;
+            PageContent pageContent = null;
             TeamPrint tp;
 
             using (ShootappDBEntities context = new ShootappDBEntities())
@@ -112,62 +106,82 @@ namespace Shootapp
                         tp = new TeamPrint(tempTeam);
                         TeamsL.Add(tp);
                     }
-
                 }
             }
 
             TeamsL.Sort();
-            TeamsL.Reverse();
-
-            int rank = 1;
+            TeamsL.Reverse();           
 
             foreach (TeamPrint t in TeamsL)
             {
                 t.GlobalRank = rank;
-                txbTeam.Text += t.ToString();
+
+                if (counter % blocks_on_page == 0)
+                {
+                    page = new FixedPage();
+                    pageText = new TextBlock();
+                    pageContent = new PageContent();
+                    pageText.FontFamily = new FontFamily("Consolas");
+
+                    pageText.Text = String.Format("\n   {0}, {1}{2,70}. stran\n\n", cname, cdate.ToShortDateString(), counter / blocks_on_page);
+
+                    pageText.Text += String.Format("   {0} {1}{2,20}{3,4}{4,4}{5,4}{6,4}{7,4}{8,4}{9,4}{10,4}{11,4}{12,4}{13,4}{14,13}{15,13}\n", "MESTO", "EKIPA", "M", 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, "STRELI", "REZULTAT");
+                }
+
+                pageText.Text += t.ToString();
+
+                if (counter % blocks_on_page == 0)
+                {
+                    page.Children.Add(pageText);
+                    ((IAddChild)pageContent).AddChild(page);
+                    fixed_document.Pages.Add(pageContent);
+                }
+
                 rank++;
+                counter++;
             }
         }
 
-        // Create single text
+        //CODE FOR CREATING FIXED DOCUMENT SINGLE
         private void FillTextSingle()
         {
             int rank = 1;
+            int blocks_on_page = 34;
+            int counter = 34;
 
-            TeamPrint.CheckIfEqualSingle(singlePrintList);
+            FixedPage page = null;
+            TextBlock pageText = null;
+            PageContent pageContent = null;
 
-            txbSingle.Text += cname + ", " + cdate.ToShortDateString() + "\n\n";
-
-            txbSingle.Text += String.Format("{0,10}{1,25}{2,30}{3,15}{4,15}{5,15}\n\n", "MESTO", "IME IN PRIIMEK", "STRELI", "ŠT.STRELOV", "ODBITEK", "REZULTAT");
-
+            TeamPrint.CheckIfEqualSingle(singlePrintList);         
+                   
             foreach (singleprintview spv in singlePrintList)
             {
-                //txbSingle.Text += rank.ToString() + ". " + spv.name + " " + spv.surname + " (" + spv.score.ToString() + ")\n";
-                txbSingle.Text += String.Format("{0,10}{1,25}{2,30}{3,15}{4,15}{5,15}\n\n", rank + ".", spv.name + " " + spv.surname, string.Join(":", spv.hits.Split(':').Reverse().ToArray()), spv.shots, spv.penal, spv.score);
-                rank++;
-            }
-        }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            PrintDialog printDialog = new PrintDialog();
-            if (printDialog.ShowDialog() == true)
-            {
-                switch (tabRoot.SelectedIndex)
+                if (counter % blocks_on_page == 0)
                 {
-                    case 0:
-                        printDialog.PrintVisual(txbTeam, "Print Team");
-                        break;
-                    case 1:
-                        printDialog.PrintVisual(txbSingle, "Print Individual");
-                        break;
-                    case 2:
-                        printDialog.PrintVisual(competitionGrid, "Print Team advanced");
-                        break;
-                    case 3:
-                        printDialog.PrintVisual(shootersSingleGrid, "Print Individual advanced");
-                        break;
+                    page = new FixedPage();
+                    pageText = new TextBlock();
+                    pageContent = new PageContent();
+
+                    pageText.FontFamily = new FontFamily("Consolas");
+
+                    pageText.Text = String.Format("\n   {0}, {1}{2,70}. stran\n\n", cname, cdate.ToShortDateString(), counter / blocks_on_page);
+
+                    pageText.Text += String.Format("{0,10}{1,25}{2,30}{3,15}{4,15}\n\n", "MESTO", "IME IN PRIIMEK", "STRELI", "ŠT.STRELOV", "REZULTAT");
                 }
+
+                pageText.Text += String.Format("{0,10}{1,25}{2,30}{3,15}{4,15}\n\n", rank + ".", spv.name + " " + spv.surname, string.Join(":", spv.hits.Split(':').Reverse().ToArray()), spv.shots, spv.score);
+
+                if (counter % blocks_on_page == 0)
+                {
+                    page.Children.Add(pageText);
+                    ((IAddChild)pageContent).AddChild(page);
+                    fixed_doc_single.Pages.Add(pageContent);
+                }
+
+                rank++;
+                counter++;
             }
         }
     }

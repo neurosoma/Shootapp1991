@@ -7,6 +7,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using System.ComponentModel;
 
 namespace Shootapp
 {
@@ -23,6 +24,10 @@ namespace Shootapp
 
         //Flags for quick editing
         private bool quickEditing = false;
+
+        //Filter global Variables
+        int ColumnIndex { get; set; }
+        ListSortDirection FilterSortDirection { get; set; }
 
         public MainWindow()
         {
@@ -42,6 +47,8 @@ namespace Shootapp
             shootBox[9] = txb9;
             shootBox[10] = txb10;
             shootBox[11] = txb11;
+
+            ColumnIndex = -1;
         }
 
         // On window loaded connect listis to datagrid items source
@@ -216,7 +223,30 @@ namespace Shootapp
                     shootersGrid2.ItemsSource = context.shooterscoviews.ToList();
                 }
             }
+
+            //MessageBox.Show(ColumnIndex.ToString());
+
+
+            if (ColumnIndex > -1)
+            {
+                //Clear current sort descriptions 
+                shootersGrid2.Items.SortDescriptions.Clear();
+
+                //Get property name to apply sort based on desired column              
+                DataGridBoundColumn dgbc = (DataGridBoundColumn)shootersGrid2.Columns[ColumnIndex];
+                Binding binding = (Binding)dgbc.Binding;
+                string propertyName = binding.Path.Path;
+
+                //Add the new sort description 
+                shootersGrid2.Items.SortDescriptions.Add(new SortDescription(propertyName, FilterSortDirection));
+
+                shootersGrid2.Columns[ColumnIndex].SortDirection = FilterSortDirection;
+
+                //refresh items to display sort 
+                shootersGrid2.Items.Refresh();
+            }
         }
+
 
         private void UpdateCompetitionBox2()
         {
@@ -389,6 +419,7 @@ namespace Shootapp
         private void btnEdit2_Click(object sender, RoutedEventArgs e)
         {
             shooterscoview shooco = (shooterscoview)shootersGrid2.SelectedItem;
+
             if (shooco != null)
             {
                 SeekSelectRow(shooco.id);
@@ -399,6 +430,7 @@ namespace Shootapp
 
             btnShooAdd.IsEnabled = false;
             btnShooDel.IsEnabled = false;
+            btnShooClear.IsEnabled = false;
         }
 
         // Delete competitior from competition
@@ -424,7 +456,7 @@ namespace Shootapp
         // Set Shots
         private void btnSetShots_Click(object sender, RoutedEventArgs e)
         {
-            competitionview comView = null; //= (competitionview)competitionGrid.SelectedItem;
+            competitionview comView = null;
 
             int selectedRow = competitionGrid.SelectedIndex;
 
@@ -580,51 +612,39 @@ namespace Shootapp
                     {
                         case 0:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 0;
                             break;
                         case 1:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 1;
                             break;
                         case 2:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 2;
                             break;
                         case 3:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 3;
                             break;
                         case 4:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 4;
                             break;
                         case 5:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 5;
                             break;
                         case 6:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 6;
                             break;
                         case 7:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 7;
                             break;
                         case 8:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 8;
                             break;
                         case 9:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 9;
                             break;
                         case 10:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 10;
                             break;
                         case 11:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 10;
                             break;
                     }
                 }
@@ -660,19 +680,14 @@ namespace Shootapp
                 lblRegShots.Content = string.Empty;
                 lblFinalScore.Content = string.Empty;
             }
-
-            /*Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
-            {
-                txb0.Focus();
-            }));*/
         }
 
-        //FILTER INNER WORKINGS
-        int ColumnIndex { get; set; }
 
+        //FILTER INNER WORKINGS
         private void shootersGrid2_Sorting(object sender, DataGridSortingEventArgs e)
         {
             ColumnIndex = e.Column.DisplayIndex;
+            FilterSortDirection = e.Column.SortDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
         }
 
         //FILTER EVENT
@@ -746,98 +761,6 @@ namespace Shootapp
             }
         }
 
-
-        /*private void txbNameSer_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            txbSurnameSer.Text = string.Empty;
-            txbTeamSer.Text = string.Empty;
-        }
-
-        private void txbSurnameSer_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            txbNameSer.Text = string.Empty;
-            txbTeamSer.Text = string.Empty;
-        }
-
-        private void txbTeamSer_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            txbNameSer.Text = string.Empty;
-            txbSurnameSer.Text = string.Empty;
-        }*/
-
-        //FILTER GILTER :)
-        /*private void btnFilter_Click(object sender, RoutedEventArgs e)
-        {
-            string searchStr;            
-
-            using (ShootappDBEntities context = new ShootappDBEntities())
-            {
-                if (context.shooterscoviews != null)
-                {
-                    ListCollectionView lview = new ListCollectionView(context.shooterscoviews.ToList());
-
-                    //Custom filter please work you bastard!!!
-
-                    if (ColumnIndex == 1)
-                    {
-                        searchStr = txbNameSer.Text.ToLower();
-                        lview.Filter = (s) =>
-                        {
-                            shooterscoview ssv = s as shooterscoview;
-                            if (ssv.name.ToLower().StartsWith(searchStr))
-                            {
-                                return true;
-                            }
-                            else return false;
-                        };
-                    }
-                    else if (ColumnIndex == 2)
-                    {
-                        searchStr = txbNameSer.Text.ToLower();
-                        lview.Filter = (s) =>
-                        {
-                            shooterscoview ssv = s as shooterscoview;
-                            if (ssv.surname.ToLower().StartsWith(searchStr))
-                            {
-                                return true;
-                            }
-                            else return false;
-                        };
-                    }
-                    else if (ColumnIndex == 4)
-                    {
-                        searchStr = txbNameSer.Text.ToLower();
-                        lview.Filter = (s) =>
-                        {
-                            shooterscoview ssv = s as shooterscoview;
-                            if (ssv.tname.ToLower().StartsWith(searchStr))
-                            {
-                                return true;
-                            }
-                            else return false;
-                        };
-                    }
-                    else
-                    {
-                        context.Dispose();
-                        return;
-                    }
-                    shootersGrid2.ItemsSource = lview;
-                }
-            }
-        }*/
-
-        //-----------------------------------------------------------------
-
-        /*private void btnClear_Click(object sender, RoutedEventArgs e)
-        {
-            UpdateShootersGrid2();
-
-            txbNameSer.Text = string.Empty;
-            txbSurnameSer.Text = string.Empty;
-            txbTeamSer.Text = string.Empty;
-        }*/
-
         private void shootersGrid2_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             AddShooterToComp();
@@ -884,7 +807,7 @@ namespace Shootapp
                 {
                     context.SaveChanges();
                 }
-                catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException e)
+                catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException)
                 {
                     MessageBox.Show("Competition name and date must be unique.", "Warning!");
                 }
@@ -941,7 +864,7 @@ namespace Shootapp
                 {
                     context.SaveChanges();
                 }
-                catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException e)
+                catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException)
                 {
                     MessageBox.Show("Competition name and date must be unique.", "Warning!");
                 }
@@ -1067,26 +990,31 @@ namespace Shootapp
                 AddShooterToComp(id);
 
                 UnfrezeAll();
+                txbNameSer_TextChanged(this, null);
                 return;
             }
+            txbNameSer_TextChanged(this, null);
         }
 
         // Update shooter record
-        private void UpdateShooter()
+        private long UpdateShooter()
         {
+            long id = -1;
+
             if (txbShooId.Text == string.Empty)
             {
                 MessageBox.Show("Please select shooter", "Warning!");
-                return;
+                return -1;
             }
             if (txbShooName.Text == string.Empty)
             {
                 MessageBox.Show("Shooter name cant be empty", "Warning!");
-                return;
+                return -1;
             }
             using (ShootappDBEntities context = new ShootappDBEntities())
             {
                 shooterscoview shooterco = (shooterscoview)shootersGrid.SelectedItem;
+                id = shooterco.id;
 
                 shooter shooter1 = context.shooters.FirstOrDefault(c => c.id == shooterco.id);
                 shooter1.name = txbShooName.Text;
@@ -1107,20 +1035,34 @@ namespace Shootapp
 
             //Update both grids in competition
             UpdateSeekData();
-
+            return id;
         }
 
         private void btnShooUpd_Click(object sender, RoutedEventArgs e)
         {
-            UpdateShooter();
+            long id = UpdateShooter();
 
             if (quickEditing)
             {
                 UnfrezeAll();
+
+                List<shooterscoview> shooList = (List<shooterscoview>)shootersGrid2.ItemsSource;
+                for (int i = 0; i < shooList.Count; i++)
+                {
+                    if (shooList[i].id == id)
+                    {
+                        shootersGrid2.SelectedIndex = i;
+                        txbNameSer_TextChanged(this, null);
+                        return;
+                    }
+                }
+                txbNameSer_TextChanged(this, null);
                 return;
             }
 
             txbShooName.Focus();
+            //Event
+            txbNameSer_TextChanged(this, null);
         }
 
         // Delete shooter
@@ -1159,10 +1101,12 @@ namespace Shootapp
             if (quickEditing)
             {
                 UnfrezeAll();
+                txbNameSer_TextChanged(this, null);
                 return;
             }
 
             txbShooName.Focus();
+            txbNameSer_TextChanged(this, null);
         }
 
         // Shooter row selection event handler
@@ -1196,6 +1140,20 @@ namespace Shootapp
             }
         }
 
+        private void SeekSelectRow2(long id)
+        {
+
+            List<shooterscoview> shooList = (List<shooterscoview>)shootersGrid2.ItemsSource;
+            for (int i = 0; i < shooList.Count; i++)
+            {
+                if (shooList[i].id == id)
+                {
+                    shootersGrid2.SelectedIndex = i;
+                    return;
+                }
+            }
+        }
+
         /***************************************************TEAM_DBM*************************************************************/
 
         // Add team to DB
@@ -1224,7 +1182,7 @@ namespace Shootapp
                     context.SaveChanges();
                     team_id = new_team.id;
                 }
-                catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException e)
+                catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException)
                 {
                     MessageBox.Show("Team name must be unique.", "Warning!");
                 }
@@ -1268,7 +1226,7 @@ namespace Shootapp
                     {
                         context.SaveChanges();
                     }
-                    catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException e)
+                    catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException)
                     {
                         MessageBox.Show("Team name must be unique.", "Warning!");
                     }
@@ -1419,56 +1377,43 @@ namespace Shootapp
                     {
                         case 0:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 0;
                             break;
                         case 1:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 1;
                             break;
                         case 2:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 2;
                             break;
                         case 3:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 3;
                             break;
                         case 4:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 4;
                             break;
                         case 5:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 5;
                             break;
                         case 6:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 6;
                             break;
                         case 7:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 7;
                             break;
                         case 8:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 8;
                             break;
                         case 9:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 9;
                             break;
                         case 10:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 10;
                             break;
                         case 11:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 10;
                             break;
                     }
                 }
                 lblRegShots.Content = regShotsInt.ToString();
-                //lblFinalScore.Content = finScoreDou.ToString();
 
                 lblFinalScore.Content = !(comrow.score is null) ? comrow.score.ToString() : "";
 
@@ -1537,57 +1482,43 @@ namespace Shootapp
                     {
                         case 0:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 0;
                             break;
                         case 1:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 1;
                             break;
                         case 2:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 2;
                             break;
                         case 3:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 3;
                             break;
                         case 4:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 4;
                             break;
                         case 5:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 5;
                             break;
                         case 6:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 6;
                             break;
                         case 7:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 7;
                             break;
                         case 8:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 8;
                             break;
                         case 9:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 9;
                             break;
                         case 10:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 10;
                             break;
                         case 11:
                             regShotsInt += int.Parse(xhits[i]);
-                            //finScoreDou += int.Parse(xhits[i]) * 10;
                             break;
                     }
                 }
                 lblRegShots.Content = regShotsInt.ToString();
-
-                //lblFinalScore.Content = finScoreDou.ToString();
 
                 lblFinalScore.Content = !(comrow.score is null) ? comrow.score.ToString() : "";
 
@@ -1642,6 +1573,8 @@ namespace Shootapp
 
             btnShooUpd.IsEnabled = false;
             btnShooDel.IsEnabled = false;
+
+            btnCancelQuick.Visibility = Visibility.Visible;
         }
 
         private void tabCont_KeyUp(object sender, KeyEventArgs e)
@@ -1749,16 +1682,14 @@ namespace Shootapp
         // Import from csv file
         private void btnImportAll_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Import from ShootersTeams.csv file", "Warrning!", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
-            {
-                SDBImporter sdbimp = new SDBImporter();
-                sdbimp.ImportData();
+            SDBImporter sdbimp = new SDBImporter();
+            sdbimp.ImportData();
 
-                // Update Grids
-                UpdateTeamGrid();
-                UpdateShooGrid();
-                UpdateSeekData();
-            }
+            // Update Grids
+            UpdateTeamGrid();
+            UpdateShooGrid();
+            UpdateSeekData();
+
         }
 
         private void UnfrezeAll()
@@ -1776,10 +1707,13 @@ namespace Shootapp
             btnShooAdd.IsEnabled = true;
             btnShooUpd.IsEnabled = true;
             btnShooDel.IsEnabled = true;
+            btnShooClear.IsEnabled = true;
 
             quickEditing = false;
 
             tabCont.SelectedIndex = 0;
+
+            btnCancelQuick.Visibility = Visibility.Hidden;
         }
 
         // freeze tabs when quick editing
@@ -1923,6 +1857,11 @@ namespace Shootapp
         private void txb11_TextChanged(object sender, TextChangedEventArgs e)
         {
             countShots();
+        }
+
+        private void BtnCancelQuick_Click(object sender, RoutedEventArgs e)
+        {
+            UnfrezeAll();
         }
     }
 }

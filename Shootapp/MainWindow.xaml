@@ -304,6 +304,7 @@
                                 </DockPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <Button x:Name="btnNewTeam" Content="New Team" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,2,2,2" Click="btnNewTeam_Click"/>
+                                    <Button x:Name="btnCancelQuick" Content="Cancel Quick" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,2,2,2" Visibility="Hidden" Click="BtnCancelQuick_Click"/>
                                 </StackPanel>
                                 <StackPanel Margin="3,3,3,3">
                                     <GroupBox Header="Note:" >

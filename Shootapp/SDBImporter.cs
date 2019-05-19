@@ -2,6 +2,8 @@
 using System.IO;
 using System.Linq;
 using System.Windows;
+using Microsoft.Win32;
+
 
 namespace Shootapp
 {
@@ -13,26 +15,52 @@ namespace Shootapp
             string surname;
             string team;
 
+            string[] split_string;
             string read_string;
+            string csvFile = null;
 
-            string csvFile = @"C:\Shootapp1991\ImportCSV\ShootersTeams.csv";
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                csvFile = openFileDialog.FileName;
+            }
+
+            if (csvFile == null)
+            {
+                return;
+            }
 
             try
             {
                 using (StreamReader sr = new StreamReader(csvFile))
                 {
-                    while ((read_string = sr.ReadLine()) != null)
+                    // Checks if file has right structure
+                    if ((read_string = sr.ReadLine()) != null)
                     {
-                        string[] split_string = read_string.Split(',');
+                        split_string = read_string.Split(',');
 
                         name = split_string[0];
                         surname = split_string[1];
                         team = split_string[2];
 
-                        if (name.ToLower() == "name" && surname.ToLower() == "surname" && team.ToLower() == "team")
+                        if (name != "NAME" || surname != "SURNAME" || team != "TEAM")
                         {
-                            continue;
+                            return;
                         }
+                    }
+                    else
+                    {
+                        return;
+                    }
+
+                    while ((read_string = sr.ReadLine()) != null)
+                    {
+                        split_string = read_string.Split(',');
+
+                        name = split_string[0];
+                        surname = split_string[1];
+                        team = split_string[2];
 
                         if (name != String.Empty && surname != String.Empty && team != String.Empty)
                         {
@@ -46,7 +74,7 @@ namespace Shootapp
                                 {
                                     context.SaveChanges();
                                 }
-                                catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException e)
+                                catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException)
                                 {
                                     //Do nothing
                                 }
@@ -68,7 +96,7 @@ namespace Shootapp
                                 {
                                     context.SaveChanges();
                                 }
-                                catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException e)
+                                catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException)
                                 {
                                     //Do nothing
                                 }

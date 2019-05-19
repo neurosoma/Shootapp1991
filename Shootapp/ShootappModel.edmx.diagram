@@ -9,9 +9,9 @@
         <EntityTypeShape EntityType="ShootappDBModel.result" Width="1.5" PointX="5.125" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="ShootappDBModel.shooter" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="ShootappDBModel.team" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ShootappDBModel.competitionview" Width="1.5" PointX="5" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShootappDBModel.competitionview" Width="2" PointX="5.25" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ShootappDBModel.shooterscoview" Width="1.5" PointX="6.875" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="ShootappDBModel.singleprintview" Width="1.5" PointX="7.125" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShootappDBModel.singleprintview" Width="1.5" PointX="7.5" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ShootappDBModel.teamdistview" Width="1.5" PointX="8.875" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="ShootappDBModel.teamprintview" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
         <AssociationConnector Association="ShootappDBModel.FK_results_1_0" ManuallyRouted="false" />
